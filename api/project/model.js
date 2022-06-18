@@ -13,4 +13,17 @@ const retrieveProjects = async () => {
     return modifiedProjects;
 };
 
-module.exports = { retrieveProjects };
+const addProject = async (projectToAdd) => {
+    const [id] = await database('projects').insert(projectToAdd);
+
+    const newProject = await database('projects').where('project_id', id).first();
+
+    const modifiedNewProject = {
+        ...newProject,
+        project_completed: newProject.project_completed ? true : false
+    };
+
+    return modifiedNewProject;
+};
+
+module.exports = { retrieveProjects, addProject };
