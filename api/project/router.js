@@ -4,6 +4,13 @@ const router = require('express').Router();
 
 const Projects = require('./model');
 
-
+router.get('/', async (request, response, next) => {
+    try {
+        const projects = await Projects.retrieveProjects();
+        response.json(projects);
+    } catch (next) {
+        next();
+    }
+})
 
 module.exports = router;
