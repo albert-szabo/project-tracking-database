@@ -8,8 +8,8 @@ router.get('/', async (request, response, next) => {
     try {
         const projects = await Projects.retrieveProjects();
         response.json(projects);
-    } catch (next) {
-        next();
+    } catch (error) {
+        next(error);
     }
 })
 
