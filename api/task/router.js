@@ -15,4 +15,14 @@ router.get('/', async (request, response, next) => {
     }
 });
 
+router.post('/', validateNewTaskPayload, async (request, response, next) => {
+    try {
+        const taskToAdd = request.body;
+        const newTask = await Tasks.addTask(taskToAdd);
+        response.status(201).json(newTask);
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = router;

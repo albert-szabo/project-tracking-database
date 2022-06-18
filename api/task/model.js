@@ -15,4 +15,17 @@ const retrieveTasks = async () => {
     return modifiedTasks;
 };
 
-module.exports = { retrieveTasks };
+const addTask = async (taskToAdd) => {
+    const [id] = await database('tasks').insert(taskToAdd);
+
+    const newTask = await database('tasks').where('task_id', id).first();
+
+    const modifiedTask = {
+        ...newTask,
+        task_completed: newTask.task_completed ? true : false
+    };
+
+    return modifiedTask;
+};
+
+module.exports = { retrieveTasks, addTask };
