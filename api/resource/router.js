@@ -15,4 +15,14 @@ router.get('/', async (request, response, next) => {
     }
 });
 
+router.post('/', checkResourceName, async (request, response, next) => {
+    try {
+        const resourceToAdd = request.body;
+        const newResource = await Resources.addResource(resourceToAdd);
+        response.status(201).json(newResource);
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = router;
